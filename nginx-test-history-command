@@ -1,0 +1,26 @@
+kubeadm join 192.168.10.33:6443 --token j8qcif.a9nwirjg6zx1malf \
+	--discovery-token-ca-cert-hash sha256:adc7b4f88ca6fcce6303167d38d54a7f1f34316464e471e4cd13954bce26e768 
+142  bash com.sh
+  143  kubectl get nodes
+  144  kubectl create namespace ingress-nginx
+  145  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+  146  kubectl get pods -n ingress-nginx
+  147  nano test.yml
+  148  cat test.yml 
+  149  kubectl apply -f test.yml 
+  150  kubectl get all -n kastompt
+  151  clear
+  152  kubectl edit svc -n ingress-nginx
+  153  kubectl get nodes
+  154  kubectl get svc -n ingress-nginx
+  155  nano test.yml 
+  156  kubectl apply -f test.yml 
+  157  kubectl get all -n kastompt
+  158  kubectl get nodes
+  159  kubectl get nodes -o wide
+  160  kubectl get nodes 
+  161  kubectl get all -n kastompt
+  162  kubectl get nodes 
+  163  sudo kubeadm reset -f
+  164  rm -rf /etc/cni/net.d
+  165  rm -rf $HOME/.kube/config
