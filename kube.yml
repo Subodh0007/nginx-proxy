@@ -1,0 +1,77 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ancepo
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: regcred
+  namespace: ancepo
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJoYXJib3IucmFtb2xhLnRvcCI6eyJ1c2VybmFtZSI6InNuYmVycnkiLCJwYXNzd29yZCI6IlFjazhdfktSU0EzX0s2VyIsImVtYWlsIjoiaW5mb0BoYXJib3IucmFtb2xhLnRvcCIsImF1dGgiOiJjMjVpWlhKeWVUcFJZMnM0WFg1TFVsTkJNMTlMTmxjPSJ9fX0=  # Replace with your actual base64 auth
+
+---
+# Site 1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ancepo
+  namespace: ancepo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ancepo
+  template:
+    metadata:
+      labels:
+        app: ancepo
+    spec:
+      containers:
+      - name: ancepo
+        image: harbor.ramola.top/img/ancepo:latest
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: regcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ancepo-service
+  namespace: ancepo
+spec:
+  selector:
+    app: ancepo
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ancepo-ingress
+  namespace: ancepo
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ancepo.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ancepo-service
+            port:
+              number: 80
