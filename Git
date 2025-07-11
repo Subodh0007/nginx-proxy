@@ -1,0 +1,45 @@
+✅ Goal:
+
+Replace all contents of the main branch with the current contents of the dev branch.
+🔧 Steps:
+
+    Clone your repo (if not already cloned):
+
+git clone https://github.com/your-username/your-repo.git
+cd your-repo
+
+Fetch the latest changes from remote:
+
+git fetch origin
+
+Switch to the main branch:
+
+git checkout main
+
+Reset the main branch to match dev:
+
+    This will make main look exactly like dev, including removing files that exist only in main.
+
+git reset --hard origin/dev
+
+Push the changes to GitHub:
+
+    This overwrites main on GitHub to match dev.
+
+    git push origin main --force
+
+⚠️ Warning:
+
+    This process will overwrite history and content of the main branch.
+
+    Only do this if you're okay with main being exactly like dev.
+
+✅ Alternative (if you want a merge instead):
+
+If you just want to bring the changes from dev into main without replacing everything:
+
+git checkout main
+git merge dev
+git push origin main
+
+Let me know if you want to keep commit history or just overwrite contents — I can tailor the steps.
